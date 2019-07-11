@@ -12,50 +12,46 @@ type ContextOptions = {
   connection: { context: GraphQLContext };
 };
 
+function createContext(viewer: GraphQLContext['viewer']): GraphQLContext {
+  return {
+    viewer,
+    users: new UserLoader(),
+    rooms: new RoomLoader(),
+    presence: new PresenceLoader(),
+  };
+}
+
 const graphql = new ApolloServer({
   schema,
   context: async ({ req, connection }: ContextOptions) => {
     let context: GraphQLContext | null = null;
     if (connection) {
       context = connection.context;
-    } else if (req) {
+    } else if (req.headers.authorization) {
       const token = req.headers.authorization;
-      if (token) {
-        const user = verify<GraphQLContext['viewer']>(token);
-        if (user) {
-          context = {
-            viewer: user,
-            users: new UserLoader(),
-            rooms: new RoomLoader(),
-            presence: new PresenceLoader(),
-          };
-        }
+      const user = verify<GraphQLContext['viewer']>(token);
+      if (user) {
+        context = createContext(user);
       }
     }
-
     if (context) {
       await ensurePresence(context.viewer.id);
     }
-
     return context;
   },
   subscriptions: {
-    onConnect: async (params: any) => {
-      if (!params.token) {
-        throw new AuthenticationError('Token parameter is not present');
+    onConnect: async (params: { [key: string]: any }): Promise<GraphQLContext> => {
+      if (typeof params.token !== 'string') {
+        throw new AuthenticationError('The "token" parameter is invalid.');
       }
+      let viewer: GraphQLContext['viewer'];
       try {
-        const viewer = verify<GraphQLContext['viewer']>(params.token);
-        const context: GraphQLContext = {
-          viewer,
-          users: new UserLoader(),
-          rooms: new RoomLoader(),
-          presence: new PresenceLoader(),
-        };
-        return context;
-      } catch {
+        viewer = verify(params.token);
+      } catch (e) {
+        console.error(e);
         throw new AuthenticationError('Unable to validate token');
       }
+      return createContext(viewer);
     },
   },
 });
