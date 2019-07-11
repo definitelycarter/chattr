@@ -1,0 +1,7 @@
+.app {
+  height: 100%;
+  --primary-color: #292f4c;
+  &.light {
+    --primary-text-color: #333;
+  }
+}

@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ../../
+      dockerfile: ./build/development/nginx.Dockerfile
+    networks:
+      - my-net
+    ports:
+      - 8000:8080
+  backend:
+    build:
+      context: ../../
+      dockerfile: ./build/development/backend.Dockerfile
+    links:
+      - postgres
+      - redis
+    ports:
+      - 8080
+    networks:
+      my-net:
+        aliases:
+          - backend
+  postgres:
+    image: postgres
+    networks:
+      - my-net
+    ports:
+      - 5432:5432
+  redis:
+    image: redis
+    networks:
+      - my-net
+    ports:
+      - 6379:6379
+networks:
+  my-net:
+    driver: 'bridge'

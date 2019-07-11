@@ -1,0 +1,19 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "packages/*/lib": true,
+    "packages/*/types": true,
+    "**/node_modules": true,
+    "**/tsconfig.tsbuildinfo": true
+  },
+  "cSpell.words": [
+    "chattr",
+    "postgres",
+    "pubsub",
+    "typeorm",
+    "zrangebyscore",
+    "zrem"
+  ],
+  "editor.minimap.maxColumn": 100
+}

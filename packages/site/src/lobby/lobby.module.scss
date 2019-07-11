@@ -1,0 +1,36 @@
+@import '../content/components/input.module.scss';
+
+.container {
+  height: 100%;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.content {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  margin: 0px;
+  color: var(--primary-text-color);
+}
+
+.name-filter {
+  padding: 10px 7px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  &:focus {
+    border-color: var(--primary-color);
+  }
+}
+
+.wrapper {
+  width: 320px;
+}
+
+.room-list {
+  margin-top: 10px;
+}

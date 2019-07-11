@@ -1,0 +1,11 @@
+path {
+  &.online {
+    fill: #34d859;
+  }
+  &.away {
+    fill: yellow;
+  }
+  &.offline {
+    fill: lightgray;
+  }
+}

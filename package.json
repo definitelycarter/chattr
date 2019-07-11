@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "ts:clean": "rm -rf packages/*/lib packages/*/types packages/*/tsconfig.tsbuildinfo",
+    "prets:build": "yarn ts:clean",
+    "ts:build": "node ./scripts/buildTs"
+  },
+  "devDependencies": {
+    "execa": "^1.0.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.17.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true
+  },
+  "workspaces": [
+    "packages/**"
+  ]
+}

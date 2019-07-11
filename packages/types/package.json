@@ -1,0 +1,10 @@
+{
+  "name": "@chattr/types",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}

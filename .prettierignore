@@ -1,0 +1,16 @@
+
+build/
+nginx/
+
+packages/*/lib
+packages/*/types
+packages/*/*.tsbuildinfo
+
+.DS_Store
+.dockerignore
+.gitignore
+.gitkeep
+.prettierignore
+*.lock
+*.ico
+*.html

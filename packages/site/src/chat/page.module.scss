@@ -1,0 +1,14 @@
+@import '../content/components/page.module.scss';
+
+.container {
+  height: 100%;
+  display: flex;
+}
+
+.sidebar {
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+}
