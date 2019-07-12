@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { QUERY_ROOMS, QueryRoomsResult } from './query';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import React, { useEffect, useRef, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import styles from './lobby.module.scss';
-import { string } from 'prop-types';
-import { RoomItem } from './room';
 import { CREATE_ROOM } from './mutation';
+import { QueryRoomsResult, QUERY_ROOMS } from './query';
+import { RoomItem } from './room';
 
 interface LobbyProps extends RouteComponentProps {}
 export function Lobby(props: LobbyProps) {

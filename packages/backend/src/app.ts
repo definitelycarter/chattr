@@ -7,20 +7,6 @@ import { ensurePresence, PresenceLoader } from './graphql/presence';
 
 const app = express();
 
-type ContextOptions = {
-  req: express.Request;
-  connection: { context: GraphQLContext };
-};
-
-function createContext(viewer: GraphQLContext['viewer']): GraphQLContext {
-  return {
-    viewer,
-    users: new UserLoader(),
-    rooms: new RoomLoader(),
-    presence: new PresenceLoader(),
-  };
-}
-
 const graphql = new ApolloServer({
   schema,
   context: async ({ req, connection }: ContextOptions) => {
@@ -44,14 +30,13 @@ const graphql = new ApolloServer({
       if (typeof params.token !== 'string') {
         throw new AuthenticationError('The "token" parameter is invalid.');
       }
-      let viewer: GraphQLContext['viewer'];
       try {
-        viewer = verify(params.token);
+        const viewer = verify<GraphQLContext['viewer']>(params.token);
+        return createContext(viewer);
       } catch (e) {
         console.error(e);
         throw new AuthenticationError('Unable to validate token');
       }
-      return createContext(viewer);
     },
   },
 });
@@ -64,3 +49,17 @@ app.use('*', (_, res) => {
 });
 
 export { app, graphql };
+
+type ContextOptions = {
+  req: express.Request;
+  connection: { context: GraphQLContext };
+};
+
+function createContext(viewer: GraphQLContext['viewer']): GraphQLContext {
+  return {
+    viewer,
+    users: new UserLoader(),
+    rooms: new RoomLoader(),
+    presence: new PresenceLoader(),
+  };
+}

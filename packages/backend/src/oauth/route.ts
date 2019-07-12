@@ -14,23 +14,6 @@ const router = express.Router();
 
 router.get('/authorize', async (req, res) => {
   res.end();
-  // const result = await client.mutate({
-  //   variables: {
-  //     input: {
-  //       username: 'definitelycarter',
-  //       password: 'abc',
-  //     },
-  //   },
-  //   mutation: gql`
-  //     mutation LoginUser($input: LoginUserInput!) {
-  //       loginUser(input: $input) {
-  //         token
-  //       }
-  //     }
-  //   `,
-  // });
-
-  // res.send(result.data);
 });
 
 export default router;

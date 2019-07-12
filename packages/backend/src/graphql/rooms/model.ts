@@ -16,14 +16,12 @@ export default class Room {
   id: string;
   @Column({ unique: true, nullable: false })
   name?: string;
-
   @Column({ nullable: true })
   topic?: string;
 
   @OneToOne(_ => User, { nullable: false })
   @JoinColumn({ name: 'owner_id' })
   owner?: User;
-
   @RelationId((room: Room) => room.owner, 'owner_id')
   owner_id?: string;
 

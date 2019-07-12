@@ -1,18 +1,9 @@
-// import { GraphQLContext } from 'graphql/types';
 import pubSub from '../pubsub';
 import { updateUserPresence } from './helper';
+import ms from 'ms';
 
 let interval: NodeJS.Timer;
-let expire_at = 1000 * 60;
-
-// let clients: { [id: number]: GraphQLContext } = {};
-// export function add(client: GraphQLContext) {
-//   clients[client.id!] = client;
-// }
-
-// export function remove(id: number) {
-//   delete clients[id];
-// }
+let expire_at = ms('1 minute');
 
 async function checkPresence() {
   const redis = pubSub.getPublisher();
@@ -28,15 +19,6 @@ async function checkPresence() {
   });
   return Promise.all(promises);
 }
-
-// export async function killUser(user_id: number) {
-//   Object.values(clients).forEach(({ id, viewer, socket }) => {
-//     if (viewer.id === user_id) {
-//       remove(id!);
-//       socket!.close();
-//     }
-//   });
-// }
 
 /**
  * starts an interval that checks for inactive / dead clients. inactive is

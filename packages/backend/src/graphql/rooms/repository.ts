@@ -29,7 +29,6 @@ export function getRoomsByIds(ids: string[]) {
     .whereInIds(ids)
     .getMany();
 }
-
 /**
  * finds the rooms the given user is a member of and
  * builds a distinct list of members of those rooms.
