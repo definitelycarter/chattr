@@ -2,7 +2,7 @@ import { QueryListArguments, RegisterUserInput } from '@chattr/types';
 import * as bcrypt from 'bcrypt';
 import { getRepository } from '../../utils/typeorm';
 import { requireAuth } from '../auth';
-import { updateUserPresence } from '../presence/helper';
+import { updateUserPresence } from '../presence/repository';
 import { makeQueryResponse, validateQueryOptions } from '../queries';
 import { GraphQLContext } from '../types';
 import User from './model';

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm';
 import Room from '../rooms/model';
 import User from '../users/model';
 

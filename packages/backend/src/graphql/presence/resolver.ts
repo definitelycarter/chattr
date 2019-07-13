@@ -1,7 +1,7 @@
 import { requireAuth } from '../auth';
 import pubSub from '../pubsub';
 import { GraphQLContext } from '../types';
-import { updateUserPresence } from './helper';
+import { updateUserPresence } from './repository';
 import { UserPresenceChangedNotification, USER_PRESENCE_CHANGED } from './types';
 
 async function updatePresence(
@@ -35,7 +35,8 @@ async function* userPresenceChanged(_: unknown, args: unknown, context: GraphQLC
 }
 
 function ping(_: unknown, args: unknown, context: GraphQLContext) {
-  // no op
+  // This this method is a noop. We use this mutation as a way for clients
+  // to update their last_seen.  last_seen is set through the context handler.
 }
 
 export default {

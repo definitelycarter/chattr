@@ -211,20 +211,12 @@ export default {
       });
     },
   },
-  UserChangedRoom: {
-    room({ room_id }: { room_id: string }, args: unknown, context: GraphQLContext) {
-      return context.rooms.getById(room_id);
-    },
-    user({ user_id }: { user_id: string }, args: unknown, context: GraphQLContext) {
+  RoomEvent: {
+    member({ user_id }: { user_id: string }, args: unknown, context: GraphQLContext) {
       return context.users.getById(user_id);
     },
-  },
-  UserTypingInRoom: {
     room({ room_id }: { room_id: string }, args: unknown, context: GraphQLContext) {
       return context.rooms.getById(room_id);
-    },
-    user({ user_id }: { user_id: string }, args: unknown, context: GraphQLContext) {
-      return context.users.getById(user_id);
     },
   },
 };

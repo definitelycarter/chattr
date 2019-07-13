@@ -1,8 +1,14 @@
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import express from 'express';
 import path from 'path';
-import schema, { GraphQLContext, RoomLoader, UserLoader, verify } from './graphql';
-import { ensurePresence, PresenceLoader } from './graphql/presence';
+import schema, {
+  ensurePresence,
+  GraphQLContext,
+  PresenceLoader,
+  RoomLoader,
+  UserLoader,
+  verify,
+} from './graphql';
 import oauth from './oauth/route';
 
 const app = express();

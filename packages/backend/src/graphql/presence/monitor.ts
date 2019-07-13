@@ -1,5 +1,5 @@
 import pubSub from '../pubsub';
-import { updateUserPresence } from './helper';
+import { updateUserPresence } from './repository';
 import ms from 'ms';
 
 let interval: NodeJS.Timer;
@@ -15,7 +15,6 @@ async function checkPresence() {
 
   const promises = user_ids.map(async id => {
     await updateUserPresence(id, 'offline');
-    // killUser(user_id);
   });
   return Promise.all(promises);
 }

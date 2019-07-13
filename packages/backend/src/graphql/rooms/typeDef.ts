@@ -22,20 +22,15 @@ export default gql`
     name: String
   }
 
-  type UserChangedRoom {
-    room: Room!
-    user: User!
-  }
-
-  type UserTypingInRoom {
-    user: User!
+  type RoomEvent {
+    member: Member!
     room: Room!
   }
 
   extend type Subscription {
-    userLeftRoom: UserChangedRoom
-    userJoinedRoom: UserChangedRoom
-    userTypingInRoom: UserTypingInRoom
+    userLeftRoom: RoomEvent!
+    userJoinedRoom: RoomEvent!
+    userTypingInRoom: RoomEvent!
   }
 
   extend type Mutation {

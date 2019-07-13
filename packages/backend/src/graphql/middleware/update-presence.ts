@@ -1,4 +1,4 @@
-import { updateUserPresence } from '../presence/helper';
+import { updateUserPresence } from '../presence/repository';
 import { GraphQLContext } from '../types';
 
 type ResolverFn<T, TReturn> = (
