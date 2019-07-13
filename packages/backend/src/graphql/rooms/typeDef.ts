@@ -8,7 +8,7 @@ export default gql`
     topic: String
     owner: Member!
     members: [Member!]!
-    messages(skip: Int, take: Int): [Message!]!
+    recent_messages: [Message!]!
   }
 
   type Member implements IUser {

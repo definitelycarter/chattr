@@ -186,11 +186,15 @@ export default {
     },
   },
   Room: {
-    messages(room: Room, args: { skip: number; take: number }) {
-      return findRoomMessages({
+    async recent_messages(room: Room) {
+      const messages = await findRoomMessages({
         room_id: room.id,
-        ...args,
+        orderBy: {
+          sent_at: 'DESC',
+        },
+        take: 30,
       });
+      return messages.reverse();
     },
     owner({ owner_id }: Room, _: unknown, context: GraphQLContext) {
       return context.users.getById(owner_id!);

@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './sidebar.module.scss';
 import { Avatar } from './avatar';
 import { Presence } from '@chattr/types';
-import { Search } from '../search/search';
-import { Flyout } from './flyout';
 import { ReactComponent as SearchIcon } from '../../content/svg/search.svg';
 
 interface SideBarProps {
