@@ -10,10 +10,10 @@ export function Avatar(props: AvatarProps) {
     <div style={{ position: 'relative' }}>
       <div
         style={{
-          height: 50,
-          width: 50,
+          height: 40,
+          width: 40,
           borderRadius: '50%',
-          background: `url(https://avatars1.githubusercontent.com/u/6287039?s=50&v=4)`,
+          background: `url(https://avatars1.githubusercontent.com/u/6287039?s=40&v=4)`,
         }}
       />
       <div

@@ -2,8 +2,8 @@ import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import express from 'express';
 import path from 'path';
 import schema, { GraphQLContext, RoomLoader, UserLoader, verify } from './graphql';
-import oauth from './oauth/route';
 import { ensurePresence, PresenceLoader } from './graphql/presence';
+import oauth from './oauth/route';
 
 const app = express();
 
@@ -14,10 +14,12 @@ const graphql = new ApolloServer({
     if (connection) {
       context = connection.context;
     } else if (req.headers.authorization) {
-      const token = req.headers.authorization;
-      const user = verify<GraphQLContext['viewer']>(token);
-      if (user) {
-        context = createContext(user);
+      try {
+        const viewer = verify<GraphQLContext['viewer']>(req.headers.authorization);
+        context = createContext(viewer);
+      } catch (e) {
+        console.error(e);
+        throw new AuthenticationError('Unable to validate token');
       }
     }
     if (context) {
