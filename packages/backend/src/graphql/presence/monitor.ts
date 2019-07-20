@@ -1,4 +1,4 @@
-import pubSub from '../pubsub';
+import redis from '../../redis';
 import { updateUserPresence } from './repository';
 import ms from 'ms';
 
@@ -6,8 +6,6 @@ let interval: NodeJS.Timer;
 let expire_at = ms('1 minute');
 
 async function checkPresence() {
-  const redis = pubSub.getPublisher();
-
   const duration = Date.now() - expire_at;
   const user_ids: string[] = await redis.zrangebyscore('users:last_seen', 0, duration);
 
