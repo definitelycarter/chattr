@@ -17,9 +17,7 @@ import {
 } from './repository';
 import { shouldNotify } from './utils';
 
-const USER_JOINED_ROOM = 'USER_JOINED_ROOM';
-const USER_LEFT_ROOM = 'USER_LEFT_ROOM';
-const USER_TYPING = 'USER_TYPING_IN_ROOM';
+const ROOM_EVENT = 'ROOM_EVENT';
 
 export async function rooms(_: unknown, options: QueryListArguments<{ name?: string }>) {
   return validateQueryOptions(options)
@@ -35,25 +33,31 @@ export function room(_: unknown, { id }: { id: string }, context: GraphQLContext
 async function joinRoom(_: unknown, { id }: { id: string }, context: GraphQLContext) {
   const { member_ids = [] } = await addRoomMember(context.viewer.id, id);
 
-  pubSub.publish(USER_JOINED_ROOM, {
-    userJoinedRoom: {
+  const payload: RoomEventNotification = {
+    roomEvent: {
+      type: 'user_joined',
       room_id: id,
       user_id: context.viewer.id,
       member_ids,
     },
-  });
+  };
+
+  pubSub.publish(ROOM_EVENT, payload);
   return true;
 }
 
 async function leaveRoom(_: unknown, { id }: { id: string }, context: GraphQLContext) {
   const { member_ids = [] } = await removeRoomMember(context.viewer.id, id);
-  pubSub.publish(USER_LEFT_ROOM, {
-    userLeftRoom: {
+
+  const payload: RoomEventNotification = {
+    roomEvent: {
+      type: 'user_left',
       room_id: id,
       user_id: context.viewer.id,
       member_ids,
     },
-  });
+  };
+  pubSub.publish(ROOM_EVENT, payload);
   return true;
 }
 
@@ -67,7 +71,6 @@ async function _createRoom(
     user_id: context.viewer.id,
   });
 
-  // 3. join the room that was just created.
   await addRoomMember(context.viewer.id, room_id);
 
   return room_id;
@@ -106,55 +109,27 @@ async function setTypingInRoom(_: unknown, args: { id: string }, context: GraphQ
     return false;
   }
 
-  pubSub.publish(USER_TYPING, {
-    userTypingInRoom: {
-      room_id: args.id,
+  const payload: RoomEventNotification = {
+    roomEvent: {
+      type: 'user_typing',
+      room_id: room.id,
       user_id: context.viewer.id,
       member_ids,
     },
-  });
+  };
+
+  pubSub.publish(ROOM_EVENT, payload);
 
   return true;
 }
 
-async function* userJoinedRoom(x1: unknown, x2: unknown, context: GraphQLContext) {
+async function* roomEvent(x1: unknown, x2: unknown, context: GraphQLContext) {
   // @ts-ignore
-  const iter: AsyncIterable<UserJoinedRoomNotification> = pubSub.asyncIterator<
-    UserJoinedRoomNotification
-  >(USER_JOINED_ROOM);
-
+  const iter: AsyncIterable<RoomEventNotification> = pubSub.asyncIterator<RoomEventNotification>(
+    ROOM_EVENT
+  );
   for await (const item of iter) {
-    if (shouldNotify(context.viewer.id, item.userJoinedRoom)) {
-      context.users.clearAll();
-      context.rooms.clearAll();
-      yield item;
-    }
-  }
-}
-
-async function* userLeftRoom(x1: unknown, x2: unknown, context: GraphQLContext) {
-  // @ts-ignore
-  const iter = pubSub.asyncIterator<UserLeftRoomNotification>(USER_LEFT_ROOM) as AsyncIterable<
-    UserLeftRoomNotification
-  >;
-
-  for await (const item of iter) {
-    if (shouldNotify(context.viewer.id, item.userLeftRoom)) {
-      context.users.clearAll();
-      context.rooms.clearAll();
-      yield item;
-    }
-  }
-}
-
-async function* userTypingInRoom(_: unknown, args: unknown, context: GraphQLContext) {
-  // @ts-ignore
-  const iter = pubSub.asyncIterator<UserTypingInRoomNotification>(USER_TYPING) as AsyncIterable<
-    UserTypingInRoomNotification
-  >;
-
-  for await (const item of iter) {
-    if (shouldNotify(context.viewer.id, item.userTypingInRoom)) {
+    if (shouldNotify(context.viewer.id, item.roomEvent)) {
       context.users.clearAll();
       context.rooms.clearAll();
       yield item;
@@ -175,14 +150,8 @@ export default {
     userTypingInRoom: requireAuth(updatePresence(setTypingInRoom)),
   },
   Subscription: {
-    userJoinedRoom: {
-      subscribe: userJoinedRoom,
-    },
-    userTypingInRoom: {
-      subscribe: userTypingInRoom,
-    },
-    userLeftRoom: {
-      subscribe: userLeftRoom,
+    roomEvent: {
+      subscribe: roomEvent,
     },
   },
   Room: {
@@ -226,19 +195,14 @@ export default {
 };
 
 type RoomChanged = {
+  type: RoomEventType;
   user_id: string;
   room_id: string;
   member_ids: string[];
 };
 
-type UserJoinedRoomNotification = {
-  userJoinedRoom: RoomChanged;
+type RoomEventNotification = {
+  roomEvent: RoomChanged;
 };
 
-type UserLeftRoomNotification = {
-  userLeftRoom: RoomChanged;
-};
-
-type UserTypingInRoomNotification = {
-  userTypingInRoom: RoomChanged;
-};
+type RoomEventType = 'user_typing' | 'user_joined' | 'user_left';

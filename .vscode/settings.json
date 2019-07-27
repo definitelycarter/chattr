@@ -4,16 +4,9 @@
   "files.exclude": {
     "packages/*/lib": true,
     "packages/*/types": true,
-    "**/node_modules": true,
+    "**/node_modules": false,
     "**/tsconfig.tsbuildinfo": true
   },
-  "cSpell.words": [
-    "chattr",
-    "postgres",
-    "pubsub",
-    "typeorm",
-    "zrangebyscore",
-    "zrem"
-  ],
+  "cSpell.words": ["chattr", "postgres", "pubsub", "typeorm", "zrangebyscore", "zrem"],
   "editor.minimap.maxColumn": 100
 }

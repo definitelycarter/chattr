@@ -22,15 +22,20 @@ export default gql`
     name: String
   }
 
+  enum RoomEventType {
+    user_typing
+    user_joined
+    user_left
+  }
+
   type RoomEvent {
-    member: Member!
+    type: RoomEventType!
     room: Room!
+    member: Member!
   }
 
   extend type Subscription {
-    userLeftRoom: RoomEvent!
-    userJoinedRoom: RoomEvent!
-    userTypingInRoom: RoomEvent!
+    roomEvent: RoomEvent!
   }
 
   extend type Mutation {
