@@ -7,6 +7,7 @@ export default gql`
     name: String!
     topic: String
     owner: Member!
+    member_count: Int!
     members: [Member!]!
     recent_messages: [Message!]!
   }

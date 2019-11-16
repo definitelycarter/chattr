@@ -5,8 +5,8 @@ import {
   ManyToMany,
   JoinTable,
   RelationId,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import User from '../users/model';
 
@@ -19,7 +19,7 @@ export default class Room {
   @Column({ nullable: true })
   topic?: string;
 
-  @OneToOne(_ => User, { nullable: false })
+  @ManyToOne(_ => User, { nullable: false })
   @JoinColumn({ name: 'owner_id' })
   owner?: User;
   @RelationId((room: Room) => room.owner, 'owner_id')

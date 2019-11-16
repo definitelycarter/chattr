@@ -11,7 +11,7 @@ interface FindRoomMessagesOptions {
 export function findRoomMessages({ room_id, skip, take, orderBy }: FindRoomMessagesOptions) {
   return getRepository(Message)
     .createQueryBuilder()
-    .where({ room_id })
+    .where({ room: { id: room_id } })
     .orderBy(orderBy)
     .skip(skip)
     .take(take)

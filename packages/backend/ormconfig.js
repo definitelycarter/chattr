@@ -6,6 +6,7 @@ const base = {
   password: '',
   maxQueryExecutionTime: 1000,
   entities: ['lib/**/model.js'],
+  logging: true,
 };
 
 module.exports = [

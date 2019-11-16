@@ -5,3 +5,7 @@ export const CREATE_ROOM = gql`
     createRoom(name: $name)
   }
 `;
+
+export type CreateRoomResult = {
+  createRoom: string;
+};

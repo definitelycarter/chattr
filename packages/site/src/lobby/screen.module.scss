@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  padding: 10px 10px 0px 10px;
+}
+
+.filter {
+  display: flex;
+  flex-direction: row;
+  > input {
+    width: 240px;
+    font-size: 14px;
+    padding: 0px 2px 5px 2px;
+    border-bottom: 1px solid #ccc;
+    margin-right: 10px;
+    &:focus {
+      border-bottom-color: var(--primary-color);
+    }
+  }
+  > button {
+    width: 60px;
+    border: 1px solid #ccc;
+    &:focus {
+      border: 1px solid var(--primary-color);
+    }
+    &:active {
+      opacity: 0.7;
+    }
+  }
+}
+
+.rooms {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px 0px 10px;
+}
+
+.room {
+  width: 240px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: var(--primary-text-color);
+
+  .name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .topic {
+    font-size: 12px;
+  }
+
+  .users,
+  .createdBy {
+    margin-top: 5px;
+    .label {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}

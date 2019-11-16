@@ -13,7 +13,10 @@ export function findRooms({ skip, take, filter = {} }: QueryListArguments<{ name
     });
   }
 
-  return builder.skip(skip).take(take);
+  return builder
+    .orderBy('name', 'ASC')
+    .skip(skip)
+    .take(take);
 }
 
 export function getRoomById(id: string) {

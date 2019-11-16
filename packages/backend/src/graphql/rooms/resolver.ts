@@ -168,6 +168,9 @@ export default {
     owner({ owner_id }: Room, _: unknown, context: GraphQLContext) {
       return context.users.getById(owner_id!);
     },
+    member_count({ member_ids = [] }: Room) {
+      return member_ids.length;
+    },
     members(
       { admin_ids = [], member_ids = [], owner_id }: Room,
       _: unknown,

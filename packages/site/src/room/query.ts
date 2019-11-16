@@ -14,6 +14,7 @@ export const QUERY_ROOM = gql`
         id
         username
         is_admin
+        presence
       }
       messages: recent_messages {
         id
@@ -50,6 +51,7 @@ type Member = {
   id: string;
   username: string;
   is_admin?: boolean;
+  presence: 'online' | 'away' | 'offline';
 };
 type Message = {
   id: string;
@@ -65,4 +67,4 @@ export type Room = {
   messages: Message[];
 };
 
-type RoomQuery = { room: Room };
+export type RoomQuery = { room: Room };

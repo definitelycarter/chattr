@@ -1,15 +1,19 @@
 @import '../content/components/page.module.scss';
 
-.container {
-  height: 100%;
-  display: flex;
-}
+.header {
+  height: 40px;
+  border-bottom: 1px solid #ccc;
 
-.sidebar {
-  z-index: 1;
-  height: 100%;
-}
-
-.content {
-  width: 100%;
+  nav {
+    display: flex;
+    > a {
+      padding: 10px;
+      &.lobby {
+        color: var(--primary-text-color);
+      }
+      &.room {
+        color: var(--primary-text-color);
+      }
+    }
+  }
 }

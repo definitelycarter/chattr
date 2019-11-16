@@ -1,0 +1,28 @@
+.container {
+  flex: 1;
+  overflow: auto;
+}
+
+.message {
+  padding: 5px;
+
+  .author {
+    display: flex;
+    align-items: flex-end;
+
+    .member {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .sent {
+      margin-left: 5px;
+      font-size: 13px;
+    }
+  }
+
+  .content {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+}
