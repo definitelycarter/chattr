@@ -8,5 +8,6 @@
     "**/tsconfig.tsbuildinfo": true
   },
   "cSpell.words": ["chattr", "postgres", "pubsub", "typeorm", "zrangebyscore", "zrem"],
-  "editor.minimap.maxColumn": 100
+  "editor.minimap.maxColumn": 100,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,30 +1,54 @@
 import React from 'react';
-import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom';
-import { usePing } from '../apollo';
-import { LobbyScreen } from '../lobby';
-import { RoomScreen } from '../room';
-import styles from './page.module.scss';
+import { RouteComponentProps } from 'react-router-dom';
+import Sidebar from './sidebar';
+import InboxSidebar from '../inbox/sidebar';
 
-interface ChatProps extends RouteComponentProps {}
+interface ChatProps extends RouteComponentProps { }
 export function ChatPage(props: ChatProps) {
-  usePing();
-
   return (
-    <div className={`chat ${styles.page}`}>
-      <header className={styles.header}>
-        <nav>
-          <Link className={styles.lobby} to="/chat/lobby">
-            Lobby
-          </Link>
-          <Link className={styles.room} to="/chat/9b1962e3-9f8e-47dd-98ab-58e1bcb6a160">
-            Rooms
-          </Link>
-        </nav>
-      </header>
-      <Switch>
-        <Route path={`${props.match.url}/lobby`} component={LobbyScreen} />
-        <Route path={`${props.match.url}/:id`} component={RoomScreen} />
-      </Switch>
+    <div className="flex flex-col h-full">
+      <div className="h-full flex">
+        <Sidebar />
+        <InboxSidebar />
+        <div
+          className="flex flex-col flex-grow border"
+          style={{ borderColor: '#efece8' }}
+        >
+          <div
+            className="border-b h-20"
+            style={{ borderColor: '#efece8' }}
+          >
+            header
+          </div>
+          <div className="flex-grow">
+            content
+          </div>
+          <div
+            className="border-t py-3 px-5"
+            style={{ borderColor: '#efece8' }}
+          >
+            <div
+              className="px-2 py-1 rounded-full"
+              style={{ background: 'rgb(247, 247, 247)' }}
+            >
+              <div className="flex">
+                <input
+                  type="text"
+                  style={{ color: '#666' }}
+                  placeholder="Type a message here..."
+                  className="text-sm bg-transparent outline-none"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="w-64"
+          style={{ background: 'linear-gradient(111.18deg, #FFFFFF 10.39%, #F8F8F8 73.23%, #FFFFFF 100%)' }}
+        >
+          right
+        </div>
+      </div>
     </div>
   );
 }

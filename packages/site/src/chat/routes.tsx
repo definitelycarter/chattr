@@ -5,8 +5,8 @@ import { ChattrWsClient as ChattrClient } from '../apollo';
 import { ChatPage } from './page';
 
 type Status = 'connected' | 'disconnected';
-interface ChatProps extends RouteComponentProps {}
-export function ChatApp(props: ChatProps) {
+interface ChatProps extends RouteComponentProps { }
+export default function ChatApp(props: ChatProps) {
   const [, setStatus] = useState<Status>('disconnected');
 
   const clientRef = useRef(

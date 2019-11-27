@@ -15,7 +15,7 @@ export function usePing() {
     });
     return () => clearInterval(timeoutRef.current!);
     // TODO i am getting a new mutation each time
-    // ts-lint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 

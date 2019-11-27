@@ -2,6 +2,7 @@ const base = {
   type: 'postgres',
   synchronize: true,
   database: 'postgres',
+  host: 'postgres',
   username: 'postgres',
   password: '',
   maxQueryExecutionTime: 1000,
@@ -16,7 +17,6 @@ module.exports = [
   },
   {
     ...base,
-    host: 'postgres',
     name: 'default',
     logging: true,
   },
