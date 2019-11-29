@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-const Account = React.lazy(() => import('./account/routes'))
-const Chat = React.lazy(() => import('./chat/routes'));
+const Account = React.lazy(() => import('./account/routes'));
+const Chat = React.lazy(() => import('./chat'));
 
 export default function App() {
   return (
@@ -10,9 +10,12 @@ export default function App() {
       <Suspense fallback={null}>
         <Route path="/account" component={Account} />
         <Route path="/chat" component={Chat} />
-        <Route path="/" exact render={() => {
-          return <Redirect to="/chat" />
-        }}
+        <Route
+          path="/"
+          exact
+          render={() => {
+            return <Redirect to="/chat" />;
+          }}
         />
       </Suspense>
     </Router>
